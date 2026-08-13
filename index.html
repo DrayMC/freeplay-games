@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreePlay Games</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6fb;
+  color:#172033;
+}
+
+header{
+  background:linear-gradient(135deg,#5b5ff7,#7b61ff);
+  color:white;
+  padding:35px 18px;
+  text-align:center;
+}
+
+header h1{
+  margin:0;
+  font-size:34px;
+}
+
+header p{
+  margin:8px 0 0;
+  opacity:.9;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+.search{
+  width:100%;
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:14px;
+  font-size:16px;
+  outline:none;
+}
+
+.categories{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:15px 0;
+}
+
+.category{
+  border:0;
+  padding:10px 17px;
+  border-radius:30px;
+  background:white;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.category.active{
+  background:#6266f5;
+  color:white;
+}
+
+.games{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+}
+
+.card{
+  background:white;
+  padding:18px;
+  border-radius:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.icon{
+  width:70px;
+  height:70px;
+  border-radius:18px;
+  background:#eef0ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+}
+
+.card h2{
+  margin:14px 0 5px;
+  font-size:21px;
+}
+
+.info{
+  color:#737b8c;
+  font-size:13px;
+}
+
+.description{
+  color:#555e70;
+  font-size:14px;
+  line-height:1.5;
+  min-height:45px;
+}
+
+.install{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  background:#6266f5;
+  color:white;
+  padding:12px;
+  border-radius:12px;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.install:hover{
+  background:#4f53dc;
+}
+
+.note{
+  background:#fff8df;
+  border:1px solid #ffe39a;
+  padding:13px;
+  border-radius:13px;
+  margin-bottom:20px;
+  font-size:14px;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#777;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎮 FreePlay Games</h1>
+  <p>Free Android games available on Google Play</p>
+</header>
+
+<div class="container">
+
+  <input
+    id="search"
+    class="search"
+    type="text"
+    placeholder="🔎 Search games..."
+  >
+
+  <div class="categories">
+    <button class="category active" onclick="filterGames('All',this)">All</button>
+    <button class="category" onclick="filterGames('Action',this)">Action</button>
+    <button class="category" onclick="filterGames('Racing',this)">Racing</button>
+    <button class="category" onclick="filterGames('Adventure',this)">Adventure</button>
+    <button class="category" onclick="filterGames('Sports',this)">Sports</button>
+    <button class="category" onclick="filterGames('Puzzle',this)">Puzzle</button>
+  </div>
+
+  <div class="note">
+    ℹ️ Install buttons open the game's official Google Play page.
+    The website does not host APK files.
+  </div>
+
+  <div id="games" class="games"></div>
+
+</div>
+
+<footer>
+  FreePlay Games © 2026
+</footer>
+
+<script>
+
+const games = [
+
+{
+name:"Free Fire",
+category:"Action",
+icon:"🔥",
+description:"Battle royale action with fast matches.",
+url:"https://play.google.com/store/apps/details?id=com.dts.freefireth"
+},
+
+{
+name:"PUBG MOBILE",
+category:"Action",
+icon:"🔫",
+description:"Battle royale shooter with multiplayer matches.",
+url:"https://play.google.com/store/apps/details?id=com.tencent.ig"
+},
+
+{
+name:"Roblox",
+category:"Adventure",
+icon:"🧱",
+description:"Play and create thousands of different experiences.",
+url:"https://play.google.com/store/apps/details?id=com.roblox.client"
+},
+
+{
+name:"Subway Surfers",
+category:"Action",
+icon:"🏃",
+description:"Run, dodge obstacles and collect coins.",
+url:"https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf"
+},
+
+{
+name:"Asphalt Legends Unite",
+category:"Racing",
+icon:"🏎️",
+description:"Fast arcade racing with powerful cars.",
+url:"https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.GloftA9HM"
+},
+
+{
+name:"Hill Climb Racing",
+category:"Racing",
+icon:"🚗",
+description:"Drive across challenging hills and collect coins.",
+url:"https://play.google.com/store/apps/details?id=com.fingersoft.hillclimb"
+},
+
+{
+name:"eFootball",
+category:"Sports",
+icon:"⚽",
+description:"Play football matches and build your team.",
+url:"https://play.google.com/store/apps/details?id=jp.konami.pesam"
+},
+
+{
+name:"8 Ball Pool",
+category:"Sports",
+icon:"🎱",
+description:"Play online pool matches.",
+url:"https://play.google.com/store/apps/details?id=com.miniclip.eightballpool"
+},
+
+{
+name:"Candy Crush Saga",
+category:"Puzzle",
+icon:"🍬",
+description:"Match candies and complete challenging levels.",
+url:"https://play.google.com/store/apps/details?id=com.king.candycrushsaga"
+},
+
+{
+name:"Clash of Clans",
+category:"Adventure",
+icon:"⚔️",
+description:"Build your village and battle other players.",
+url:"https://play.google.com/store/apps/details?id=com.supercell.clashofclans"
+},
+
+{
+name:"Brawl Stars",
+category:"Action",
+icon:"⭐",
+description:"Fast multiplayer battles with different game modes.",
+url:"https://play.google.com/store/apps/details?id=com.supercell.brawlstars"
+},
+
+{
+name:"Among Us",
+category:"Adventure",
+icon:"🚀",
+description:"Work together and discover the impostor.",
+url:"https://play.google.com/store/apps/details?id=com.innersloth.spacemafia"
+}
+
+];
+
+let currentCategory = "All";
+
+function showGames(){
+
+  const search =
+    document.getElementById("search").value.toLowerCase();
+
+  const container =
+    document.getElementById("games");
+
+  container.innerHTML = "";
+
+  const filtered = games.filter(game => {
+
+    const categoryMatch =
+      currentCategory === "All" ||
+      game.category === currentCategory;
+
+    const searchMatch =
+      game.name.toLowerCase().includes(search);
+
+    return categoryMatch && searchMatch;
+  });
+
+  filtered.forEach(game => {
+
+    container.innerHTML += `
+
+      <div class="card">
+
+        <div class="icon">${game.icon}</div>
+
+        <h2>${game.name}</h2>
+
+        <div class="info">
+          ${game.category} • Free on Google Play
+        </div>
+
+        <p class="description">
+          ${game.description}
+        </p>
+
+        <a
+          class="install"
+          href="${game.url}"
+          target="_blank"
+          rel="noopener"
+        >
+          📲 Install
+        </a>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+function filterGames(category,button){
+
+  currentCategory = category;
+
+  document
+    .querySelectorAll(".category")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  showGames();
+}
+
+document
+  .getElementById("search")
+  .addEventListener("input",showGames);
+
+showGames();
+
+</script>
+
+</body>
+  </html>
