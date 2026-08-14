@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>FreePlay Games</title>
 
 <style>
@@ -45,6 +46,7 @@ header p{
   border-radius:14px;
   font-size:16px;
   outline:none;
+  background:white;
 }
 
 .categories{
@@ -61,11 +63,21 @@ header p{
   background:white;
   cursor:pointer;
   white-space:nowrap;
+  font-weight:bold;
 }
 
 .category.active{
   background:#6266f5;
   color:white;
+}
+
+.note{
+  background:#fff8df;
+  border:1px solid #ffe39a;
+  padding:13px;
+  border-radius:13px;
+  margin-bottom:20px;
+  font-size:14px;
 }
 
 .games{
@@ -79,17 +91,26 @@ header p{
   padding:18px;
   border-radius:20px;
   box-shadow:0 5px 20px rgba(0,0,0,.08);
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-4px);
 }
 
 .icon{
   width:70px;
   height:70px;
   border-radius:18px;
+  overflow:hidden;
   background:#eef0ff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:38px;
+}
+
+.icon img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
 
 .card h2{
@@ -125,19 +146,24 @@ header p{
   background:#4f53dc;
 }
 
-.note{
-  background:#fff8df;
-  border:1px solid #ffe39a;
-  padding:13px;
-  border-radius:13px;
-  margin-bottom:20px;
-  font-size:14px;
-}
-
 footer{
   text-align:center;
   padding:30px;
   color:#777;
+}
+
+@media(max-width:500px){
+  header h1{
+    font-size:28px;
+  }
+
+  .container{
+    padding:15px;
+  }
+
+  .games{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -159,17 +185,28 @@ footer{
   >
 
   <div class="categories">
-    <button class="category active" onclick="filterGames('All',this)">All</button>
-    <button class="category" onclick="filterGames('Action',this)">Action</button>
-    <button class="category" onclick="filterGames('Racing',this)">Racing</button>
-    <button class="category" onclick="filterGames('Adventure',this)">Adventure</button>
-    <button class="category" onclick="filterGames('Sports',this)">Sports</button>
-    <button class="category" onclick="filterGames('Puzzle',this)">Puzzle</button>
+    <button class="category active"
+      onclick="filterGames('All',this)">All</button>
+
+    <button class="category"
+      onclick="filterGames('Action',this)">Action</button>
+
+    <button class="category"
+      onclick="filterGames('Racing',this)">Racing</button>
+
+    <button class="category"
+      onclick="filterGames('Adventure',this)">Adventure</button>
+
+    <button class="category"
+      onclick="filterGames('Sports',this)">Sports</button>
+
+    <button class="category"
+      onclick="filterGames('Puzzle',this)">Puzzle</button>
   </div>
 
   <div class="note">
     ℹ️ Install buttons open the game's official Google Play page.
-    The website does not host APK files.
+    This website does not host APK files.
   </div>
 
   <div id="games" class="games"></div>
@@ -185,25 +222,9 @@ footer{
 const games = [
 
 {
-name:"Free Fire",
-category:"Action",
-icon:"🔥",
-description:"Battle royale action with fast matches.",
-url:"https://play.google.com/store/apps/details?id=com.dts.freefireth"
-},
-
-{
-name:"PUBG MOBILE",
-category:"Action",
-icon:"🔫",
-description:"Battle royale shooter with multiplayer matches.",
-url:"https://play.google.com/store/apps/details?id=com.tencent.ig"
-},
-
-{
 name:"Roblox",
 category:"Adventure",
-icon:"🧱",
+image:"images/roblox.png",
 description:"Play and create thousands of different experiences.",
 url:"https://play.google.com/store/apps/details?id=com.roblox.client"
 },
@@ -211,15 +232,15 @@ url:"https://play.google.com/store/apps/details?id=com.roblox.client"
 {
 name:"Subway Surfers",
 category:"Action",
-icon:"🏃",
+image:"images/subway-surfers.png",
 description:"Run, dodge obstacles and collect coins.",
 url:"https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf"
 },
 
 {
-name:"Asphalt Legends Unite",
+name:"Asphalt Legends",
 category:"Racing",
-icon:"🏎️",
+image:"images/asphalt-legends.png",
 description:"Fast arcade racing with powerful cars.",
 url:"https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.GloftA9HM"
 },
@@ -227,7 +248,7 @@ url:"https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.Glo
 {
 name:"Hill Climb Racing",
 category:"Racing",
-icon:"🚗",
+image:"images/hill-climb-racing.png",
 description:"Drive across challenging hills and collect coins.",
 url:"https://play.google.com/store/apps/details?id=com.fingersoft.hillclimb"
 },
@@ -235,7 +256,7 @@ url:"https://play.google.com/store/apps/details?id=com.fingersoft.hillclimb"
 {
 name:"eFootball",
 category:"Sports",
-icon:"⚽",
+image:"images/efootball.png",
 description:"Play football matches and build your team.",
 url:"https://play.google.com/store/apps/details?id=jp.konami.pesam"
 },
@@ -243,7 +264,7 @@ url:"https://play.google.com/store/apps/details?id=jp.konami.pesam"
 {
 name:"8 Ball Pool",
 category:"Sports",
-icon:"🎱",
+image:"images/8-ball-pool.png",
 description:"Play online pool matches.",
 url:"https://play.google.com/store/apps/details?id=com.miniclip.eightballpool"
 },
@@ -251,7 +272,7 @@ url:"https://play.google.com/store/apps/details?id=com.miniclip.eightballpool"
 {
 name:"Candy Crush Saga",
 category:"Puzzle",
-icon:"🍬",
+image:"images/candy-crush.png",
 description:"Match candies and complete challenging levels.",
 url:"https://play.google.com/store/apps/details?id=com.king.candycrushsaga"
 },
@@ -259,7 +280,7 @@ url:"https://play.google.com/store/apps/details?id=com.king.candycrushsaga"
 {
 name:"Clash of Clans",
 category:"Adventure",
-icon:"⚔️",
+image:"images/clash-of-clans.png",
 description:"Build your village and battle other players.",
 url:"https://play.google.com/store/apps/details?id=com.supercell.clashofclans"
 },
@@ -267,7 +288,7 @@ url:"https://play.google.com/store/apps/details?id=com.supercell.clashofclans"
 {
 name:"Brawl Stars",
 category:"Action",
-icon:"⭐",
+image:"images/brawl-stars.png",
 description:"Fast multiplayer battles with different game modes.",
 url:"https://play.google.com/store/apps/details?id=com.supercell.brawlstars"
 },
@@ -275,44 +296,68 @@ url:"https://play.google.com/store/apps/details?id=com.supercell.brawlstars"
 {
 name:"Among Us",
 category:"Adventure",
-icon:"🚀",
+image:"images/among-us.png",
 description:"Work together and discover the impostor.",
 url:"https://play.google.com/store/apps/details?id=com.innersloth.spacemafia"
+},
+
+{
+name:"Ludo King",
+category:"Sports",
+image:"images/ludo-king.png",
+description:"Play the classic Ludo board game.",
+url:"https://play.google.com/store/apps/details?id=com.ludo.king"
+},
+
+{
+name:"Stumble Guys",
+category:"Action",
+image:"images/stumble-guys.png",
+description:"Race through fun obstacle courses.",
+url:"https://play.google.com/store/apps/details?id=com.kitkagames.fallbuddies"
 }
 
 ];
 
-let currentCategory = "All";
+let currentCategory="All";
 
 function showGames(){
 
-  const search =
-    document.getElementById("search").value.toLowerCase();
+  const search=
+    document.getElementById("search")
+    .value
+    .toLowerCase();
 
-  const container =
+  const container=
     document.getElementById("games");
 
-  container.innerHTML = "";
+  container.innerHTML="";
 
-  const filtered = games.filter(game => {
+  const filtered=games.filter(game=>{
 
-    const categoryMatch =
-      currentCategory === "All" ||
-      game.category === currentCategory;
+    const categoryMatch=
+      currentCategory==="All" ||
+      game.category===currentCategory;
 
-    const searchMatch =
+    const searchMatch=
       game.name.toLowerCase().includes(search);
 
     return categoryMatch && searchMatch;
   });
 
-  filtered.forEach(game => {
+  filtered.forEach(game=>{
 
-    container.innerHTML += `
+    container.innerHTML+=`
 
       <div class="card">
 
-        <div class="icon">${game.icon}</div>
+        <div class="icon">
+          <img
+            src="${game.image}"
+            alt="${game.name} logo"
+            onerror="this.style.display='none'"
+          >
+        </div>
 
         <h2>${game.name}</h2>
 
@@ -334,20 +379,18 @@ function showGames(){
         </a>
 
       </div>
-
     `;
 
   });
-
 }
 
 function filterGames(category,button){
 
-  currentCategory = category;
+  currentCategory=category;
 
   document
     .querySelectorAll(".category")
-    .forEach(btn => btn.classList.remove("active"));
+    .forEach(btn=>btn.classList.remove("active"));
 
   button.classList.add("active");
 
@@ -363,4 +406,4 @@ showGames();
 </script>
 
 </body>
-  </html>
+</html>
